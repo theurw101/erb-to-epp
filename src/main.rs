@@ -228,7 +228,7 @@ fn convert_code(input: &str) -> String {
                     let expr = &caps["expr"];
                     //let var = &caps[1];
                     let close_dash = caps.name("close_dash").map_or("", |m| m.as_str());
-                    let root_var = expr.split(|c| c == '[' || c == '.').next().unwrap_or("");
+                    let root_var = expr.split(['[', '.']).next().unwrap_or("");
                     if root_var.starts_with('$') {
                         caps[0].to_string()
                     } else {
