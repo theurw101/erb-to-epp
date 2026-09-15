@@ -4,6 +4,7 @@ use std::env;
 use std::fs;
 use std::io::{self, Write};
 use std::process;
+use wasm_bindgen::prelude::*;
 
 // Extract all @-variables, excluding those in loops
 fn extract_template_parameters(input: &str) -> Vec<String> {
@@ -300,4 +301,15 @@ fn convert_code(input: &str) -> String {
         })
         .to_string();
     result
+}
+
+// wasm
+#[wasm_bindgen]
+pub fn convert_erb_to_epp(erb_input: &str) -> String {
+    // Optional: Helps display Rust panics safely in the browser console
+    #[cfg(feature = "console_error_panic_hook")]
+    console_error_panic_hook::set_once();
+
+    // Call your internal engine and return the resulting String straight to JS
+    convert_code(erb_input)
 }

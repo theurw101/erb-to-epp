@@ -3,8 +3,18 @@ name = "erb-to-epp"
 version = "1.0.0"
 edition = "2021"
 
+[lib]
+crate-type = ["cdylib", "rlib"]
+path = "src/main.rs" 
+
 [dependencies]
 regex-lite = "0.1"
+wasm-bindgen = "0.2"
+# If your code uses standard library features that panic, this helps debugging:
+console_error_panic_hook = { version = "0.1.7", optional = true }
+
+[package.metadata.wasm-pack.profile.release]
+wasm-opt = ["-O", "--enable-bulk-memory", "--enable-mutable-globals"]
 
 [profile.release]
 opt-level = "z"

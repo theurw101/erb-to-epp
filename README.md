@@ -1,6 +1,6 @@
 # ERB to EPP Converter
 
-A CLI tool written in rust that converts embedded ruby (.erb) templates into embedded puppet (.epp) compatible syntax by:
+A CLI/web tool written in rust that converts embedded ruby (.erb) templates into embedded puppet (.epp) compatible syntax by:
  - Replacing @ with $ inside template tags
  - Converting if, unless, elsif, else, and end into proper .epp blocks with curly brackets
  - Converting simple .each loops into proper .epp
@@ -11,7 +11,25 @@ A CLI tool written in rust that converts embedded ruby (.erb) templates into emb
  - Add missing $ to variables inside tags
  - Add parameter tags like <%- | Hash $hash | -%> to beginning of new epp file
 
-### Usage
+### 🌐 Web Interface (New)
+Run this converter directly in the browser with WebAssembly.
+
+1. Install dependencies and build the Wasm package to `pkg/`:
+   ```bash
+   cargo install wasm-pack
+   wasm-pack build --target web
+   ```
+2. Start a local webserver:
+   ```bash
+   python3 -m http.server 8000
+   # or
+   ruby -run -e httpd . -p 8000
+   ```
+3. Open http://localhost:8000
+
+**Coming soon: Website**
+
+### CLI Usage
 
 ```
 #convert and print to stdout

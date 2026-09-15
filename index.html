@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Puppet ERB to EPP Converter</title>
+  <style>
+    /* A tiny bit of CSS just to put the boxes side-by-side */
+    .container { display: flex; gap: 20px; margin-top: 20px; }
+    textarea { width: 100%; height: 400px; font-family: monospace; }
+    .error { color: red; font-weight: bold; margin-top: 10px; }
+  </style>
+</head>
+<body>
+
+  <h1>ERB to EPP Converter</h1>
+  <p>Convert Puppet templates locally in the browser.</p>
+
+  <div class="container">
+    <!-- Left Pane -->
+    <div>
+      <label for="erb-input">Source .erb Template:</label>
+      <textarea id="erb-input" placeholder="<% if @example %>...<% end %>"></textarea>
+    </div>
+
+    <!-- Right Pane -->
+    <div>
+      <label for="epp-output">Generated .epp Output:</label>
+      <textarea id="epp-output" readonly placeholder="Output will appear here..."></textarea>
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <div style="margin-top: 10px;">
+    <button id="convert-btn" disabled>Loading Engine...</button>
+    <div id="error-message" class="error" style="display: none;"></div>
+  </div>
+
+  <!-- WebAssembly Script -->
+  <script type="module">
+    // Update "erb_to_epp.js" to match your exact generated file name
+    import init, { convert_erb_to_epp } from './pkg/erb_to_epp.js';
+
+    const input  = document.getElementById('erb-input');
+    const output = document.getElementById('epp-output');
+    const error  = document.getElementById('error-message');
+    const button = document.getElementById('convert-btn');
+
+    async function run() {
+      try {
+        await init(); // Load the Wasm file
+        button.innerText = 'Convert';
+        button.disabled = false;
+
+        button.addEventListener('click', () => {
+          error.style.display = 'none';
+          output.value = '';
+
+          if (!input.value.trim()) {
+            error.innerText = "Input is empty";
+            error.style.display = 'block';
+            return;
+          }
+
+          try {
+            // Run your Rust code!
+            output.value = convert_erb_to_epp(input.value);
+          } catch (err) {
+            error.innerText = err;
+            error.style.display = 'block';
+          }
+        });
+      } catch (err) {
+        error.innerText = "Failed to load WebAssembly.";
+        error.style.display = 'block';
+        console.error(err);
+      }
+    }
+
+    run();
+  </script>
+</body>
+</html>
