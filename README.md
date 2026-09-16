@@ -27,15 +27,17 @@ Run this converter directly in the browser with WebAssembly.
    ```
 3. Open http://localhost:8000
 
+(As of now, the Web Interface does not allow adding of parameter tags to the converted template)
+
 **Coming soon: Website**
 
 ### CLI Usage
 
-```
+```bash
 #convert and print to stdout
 ./erb-to-epp input.erb
 ```
-```
+```bash
 #convert and save to an output file
 ./erb-to-epp input.erb output.epp
 ```
@@ -43,7 +45,7 @@ Run this converter directly in the browser with WebAssembly.
 ### Example
 
 input.erb
-```
+```erb
 <%- if @name -%>
   Hello <%= @name %>
 <% elsif @other_name %>
@@ -52,7 +54,7 @@ input.erb
   No variable
 <%- end -%>
 
-<%- unless $name -%>
+<%- unless @name -%>
   No Name
 <%- end -%>
 
@@ -74,7 +76,7 @@ input.erb
 An Email: test@gmx.de
 ```
 output.epp
-```
+```erb
 <%- | Hash $features,
       String $name,
       String $other_name,
