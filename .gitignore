@@ -12,6 +12,3 @@ Cargo.lock
 
 # testing erbs
 /tests
-
-# wasm
-/pkg/
