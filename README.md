@@ -11,8 +11,11 @@ A CLI/web tool written in rust that converts embedded ruby (.erb) templates into
  - Add missing $ to variables inside tags
  - Add parameter tags like <%- | Hash $hash | -%> to beginning of new epp file
 
-### 🌐 Web Interface (New)
-Run this converter directly in the browser with WebAssembly.
+### 🌐 Website (New)
+
+#### https://erbtoepp.de
+
+Or: Run this converter locally with WebAssembly.
 
 1. Install dependencies and build the Wasm package to `pkg/`:
    ```bash
@@ -28,8 +31,6 @@ Run this converter directly in the browser with WebAssembly.
 3. Open http://localhost:8000
 
 (As of now, the Web Interface does not allow adding of parameter tags to the converted template)
-
-**Coming soon: Website**
 
 ### CLI Usage
 
